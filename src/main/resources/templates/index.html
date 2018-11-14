@@ -3,14 +3,22 @@
     <head>
         <title>Springboot</title>
         <meta charset="utf-8" />
+		<link rel="stylesheet" href="/css/reset.css" />
+		<link rel="stylesheet" href="/css/style.css" />
     </head>
     <body>
-        <h1 th:text="${title}"></h1>
-        <table>
+        <h2>従業員　一覧</h2>
+        <table id="employee_list">
+        	<tbody>
+				<th>社員番号</th>
+				<th>氏名</th>
+				<th>操作</th>
+        	</tbody>
             <tr th:each="emp : ${emplist}" th:object="${emp}">
-                <td th:text="*{id}"></td>
                 <td th:text="*{code}"></td>
                 <td th:text="*{name}"></td>
+				<td th:if="*{delete_flag == 1}">（削除済み）</td>
+				<td th:if="*{delete_flag != 1}">詳細を表示</td>
             </tr>
         </table>
     </body>
