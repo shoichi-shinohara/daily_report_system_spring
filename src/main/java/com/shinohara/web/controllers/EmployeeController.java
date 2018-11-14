@@ -13,19 +13,19 @@ import com.shinohara.web.models.EmployeeRepository;
 
 @Controller
 public class EmployeeController {
-	
+
 	@Autowired
 	EmployeeRepository repository;
-	
+
 	@RequestMapping(value="/employees/index", method = RequestMethod.GET)
 	public String index(Model model) {
-		List<Employee> emplist = repository.findAll();
+		List<Employee> emplist = repository.findFirst15ByOrderByIdDesc();
 		model.addAttribute("emplist", emplist);
 		return "index";
-		
+
 	}
-	
-	
-	
+
+
+
 
 }
