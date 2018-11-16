@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<div th:object="${employee}" th:fragment="header">
+	<label for="code">社員番号</label><br />
+	<input type="text" name="code" th:field="*{code}" />
+	<br /><br />
+
+	<label for="name">氏名</label><br />
+	<input type="text" name="name" th:field="*{name}" />
+	<br /><br />
+
+	<label for="password">パスワード</label><br />
+	<input type="password" name="password" />
+	<br /><br />
+
+	<button type="submit">投稿</button>
+</div>

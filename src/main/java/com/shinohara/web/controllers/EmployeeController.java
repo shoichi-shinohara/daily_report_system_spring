@@ -25,6 +25,13 @@ public class EmployeeController {
 
 	}
 
+	@RequestMapping(value="/employees/new", method = RequestMethod.GET)
+	public String newPage(Model model) {
+		model.addAttribute("employee", new Employee());
+		return "new";
+
+	}
+
 
 
 

@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<h2>従業員　新規登録ページ</h2>
+
+	<form method="POST" action="/employees/create">
+		<div th:replace="/_form.html::header"></div>
+	</form>
+
+	<p><a th:href="@{'/employees/index'}">一覧に戻る</a></p>
