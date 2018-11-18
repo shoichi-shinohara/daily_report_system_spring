@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="/app.html::head">
+</head>
+<div th:replace="/app.html::header"></div>
+<div th:object="${employee}" th:if="${employee != null}">
+	<h2 th:text="'id:' + *{id} + 'の従業員情報　編集ページ' "></h2>	
+	
+	<form method="POST" action="/employees/update">
+		<div th:replace="/_form.html::header"></div>
+	</form>
+	
+</div>
+
+<div th:object="${employee}" th:unless="${employee != null}">
+	<h2>お探しのデータは見つかりませんでした。</h2>
+</div>
+
+<p><a th:href="@{'/employees/index'}">一覧に戻る</a></p>
+<div th:replace="/app.html::footer"></div>

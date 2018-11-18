@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="/app.html::head">
+</head>
+<div th:replace="/app.html::header"></div>
+<div th:object="${employee}" th:if="${employee != null}">
+	<h2 th:text="'id:' + *{id} + 'の従業員情報　詳細ページ' "></h2>	
+	<table>
+	    <tbody>
+	        <tr>
+	            <th>社員番号</th>
+	            <td th:text="*{code}" />
+	        </tr>
+	        <tr>
+	            <th>氏名</th>
+	            <td th:text="*{name}"/>
+	        </tr>
+	        <tr>
+	            <th>権限</th>
+	            <td th:if="*{admin_flag == 1}">管理者</td>
+	            <td th:if="*{admin_flag != 1}">一般</td>
+	        </tr>
+	        <tr>
+	            <th>登録日時</th>
+				<td th:text="*{created_at}"/>
+	        </tr>
+	        <tr>
+	            <th>更新日時</th>
+	            <td th:text="*{updated_at}"/>
+	        </tr>
+	    </tbody>
+	</table>
+	
+	<p><a th:href="@{'/employees/edit?id=' + *{id}}">この従業員情報を編集する</a></p>
+	
+</div>
+
+<div th:object="${employee}" th:unless="${employee != null}">
+	<h2>お探しのデータは見つかりませんでした。</h2>
+</div>
+
+<p><a th:href="@{'/employees/index'}">一覧に戻る</a></p>
+<div th:replace="/app.html::footer"></div>

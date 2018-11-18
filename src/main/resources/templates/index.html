@@ -1,27 +1,24 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Springboot</title>
-        <meta charset="utf-8" />
-		<link rel="stylesheet" href="/css/reset.css" />
-		<link rel="stylesheet" href="/css/style.css" />
-    </head>
-    <body>
-        <h2>従業員　一覧</h2>
-        <table id="employee_list">
-        	<tbody>
-				<th>社員番号</th>
-				<th>氏名</th>
-				<th>操作</th>
-        	</tbody>
-            <tr th:each="emp : ${emplist}" th:object="${emp}">
-                <td th:text="*{code}"></td>
-                <td th:text="*{name}"></td>
-				<td th:if="*{delete_flag == 1}">（削除済み）</td>
-				<td th:if="*{delete_flag != 1}">詳細を表示</td>
-            </tr>
-        </table>
+<head th:include="/app.html::head">
+</head>
+	<div th:replace="/app.html::header"></div>
+    <h2>従業員　一覧</h2>
+    <table id="employee_list">
+    	<tbody>
+			<th>社員番号</th>
+			<th>氏名</th>
+			<th>操作</th>
+	    </tbody>
+        <tr th:each="emp : ${emplist}" th:object="${emp}">
+            <td th:text="*{code}"></td>
+            <td th:text="*{name}"></td>
+			<td th:if="*{delete_flag == 1}">（削除済み）</td>
+			<td th:if="*{delete_flag != 1}" ><a th:href="@{'/employees/show?id=' + *{id}}">詳細を表示</a></td>
+        </tr>
+    </table>
+	
+    <p><a th:href="@{'/employees/new'}">新規従業員の登録</a></p>
 
-        <p><a th:href="@{'/employees/new'}">新規従業員の登録</a></p>
-    </body>
+	<div th:replace="/app.html::footer"></div>
 </html>
