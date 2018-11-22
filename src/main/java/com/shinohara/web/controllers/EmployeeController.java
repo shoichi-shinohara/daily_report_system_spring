@@ -2,13 +2,11 @@ package com.shinohara.web.controllers;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,7 +42,7 @@ public class EmployeeController {
 		return "show";
 
 	}
-	
+
 	@RequestMapping(value="/employees/edit", method = RequestMethod.GET)
 	public String edit(@RequestParam("id")Integer id, Model model) {
 		Employee employee = repository.findById(id);
@@ -55,11 +53,26 @@ public class EmployeeController {
 
 	@RequestMapping(value="/employees/update", method = RequestMethod.POST)
 	public String update(@ModelAttribute Employee employee, Model model) {
-		
+
 		employee.setUpdated_at(new Timestamp(System.currentTimeMillis()));
 		employee.setDelete_flag(0);
 		repository.save(employee);
-		
+
+		List<Employee> emplist = repository.findFirst15ByOrderByIdDesc();
+		model.addAttribute("emplist", emplist);
+		return "index";
+
+	}
+
+	@RequestMapping(value="/employees/destroy", method = RequestMethod.POST)
+	public String destroy(@RequestParam("id")Integer id, Model model) {
+
+		Employee employee = repository.findById(id);
+		model.addAttribute("employee", employee);
+		employee.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+		employee.setDelete_flag(1);
+		repository.save(employee);
+
 		List<Employee> emplist = repository.findFirst15ByOrderByIdDesc();
 		model.addAttribute("emplist", emplist);
 		return "index";

@@ -4,12 +4,24 @@
 </head>
 <div th:replace="/app.html::header"></div>
 <div th:object="${employee}" th:if="${employee != null}">
-	<h2 th:text="'id:' + *{id} + 'の従業員情報　編集ページ' "></h2>	
-	
+	<h2 th:text="'id:' + *{id} + 'の従業員情報　編集ページ' "></h2>
+	<p>（パスワードは変更する場合のみ入力してください）</p>
+
 	<form method="POST" action="/employees/update">
 		<div th:replace="/_form.html::header"></div>
 	</form>
-	
+
+	<p><a href="#" onclick="confirmDestroy();">この従業員情報を削除する</a></p>
+    <form method="POST" action="/employees/destroy">
+        <input type="hidden" name="id" th:value="*{id}"  />
+    </form>
+    <script>
+        function confirmDestroy() {
+            if(confirm("本当に削除してよろしいですか？")) {
+                document.forms[1].submit();
+            }
+        }
+    </script>
 </div>
 
 <div th:object="${employee}" th:unless="${employee != null}">
