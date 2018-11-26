@@ -3,10 +3,15 @@ package com.shinohara.web.controllers;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -77,6 +82,25 @@ public class EmployeeController {
 		model.addAttribute("emplist", emplist);
 		return "index";
 
+	}
+
+	@RequestMapping(value="/employees/create", method = RequestMethod.POST)
+	public String create(@Validated @ModelAttribute Employee employee, BindingResult result, Model model) {
+
+		if (result.hasErrors()) {
+		} else {
+			Timestamp time_at = new Timestamp(System.currentTimeMillis());
+			employee.setCreated_at(time_at);
+			employee.setUpdated_at(time_at);
+			employee.setDelete_flag(0);
+			repository.save(employee);
+
+			List<Employee> emplist = repository.findFirst15ByOrderByIdDesc();
+			model.addAttribute("emplist", emplist);
+			return "index";			
+		}
+
+		return "index";	
 	}
 
 }

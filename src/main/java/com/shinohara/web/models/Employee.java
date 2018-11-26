@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+
+import com.shinohara.web.models.validators.EmployeeValid;
 
 @Table(name="employees")
 @NamedQueries({
@@ -37,12 +40,16 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotEmpty(message = "社員番号を入力してください。")
+    @EmployeeValid
     @Column(name = "code", nullable = false, unique = true)
     private String code;
 
+    @NotEmpty(message = "氏名を入力してください。")
     @Column(name = "name", nullable = false)
     private String name;
 
+    @NotEmpty(message = "パスワードを入力してください。")
     @Column(name = "password", length = 64, nullable = false)
     private String password;
 

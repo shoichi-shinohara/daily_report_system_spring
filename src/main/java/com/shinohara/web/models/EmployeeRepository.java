@@ -15,5 +15,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	public List<Employee> findFirst15ByOrderByIdDesc();
 	
 	public Employee findById(Integer id);
+	public Employee findByCode(String code);
 
 }
