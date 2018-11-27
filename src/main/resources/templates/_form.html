@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <div th:object="${employee}" th:fragment="header">
+	<th:block th:if="${errors != null}">
+	    <div id="flush_error">
+	        入力内容にエラーがあります。<br />
+
+	        <th:block th:each="error : ${errors}">
+	        	<p th:text="${error.defaultMessage}">
+	        </th:block>
+
+	    </div>
+	</th:block>
 	<label for="code">社員番号</label><br />
 	<input type="text" name="code" th:field="*{code}" />
 	<br /><br />
@@ -10,16 +20,16 @@
 	<br /><br />
 
 	<label for="password">パスワード</label><br />
-	<input type="password" name="password" />
+	<input type="password" name="password" th:value="*{password}" />
 	<br /><br />
-	
+
 	<label for="admin_flag">権限</label><br />
 	<select name="admin_flag">
 		<option value="0" th:selected="*{admin_flag} == 0">一般</option>
 		<option value="1" th:selected="*{admin_flag} == 1">管理者</option>
 	</select>
 	<br /><br />
-	
+
 	<div th:if="*{id != null}">
 		<input type="hidden" name="id" th:field="*{id}" />
 		<input type="hidden" name="created_at" th:field="*{created_at}" />

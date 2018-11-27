@@ -12,8 +12,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
-import com.shinohara.web.models.validators.EmployeeValid;
-
 @Table(name="employees")
 @NamedQueries({
     @NamedQuery(
@@ -41,7 +39,7 @@ public class Employee {
     private Integer id;
 
     @NotEmpty(message = "社員番号を入力してください。")
-    @EmployeeValid
+    //@EmployeeValid
     @Column(name = "code", nullable = false, unique = true)
     private String code;
 

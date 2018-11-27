@@ -3,6 +3,11 @@
 <head th:include="/app.html::head">
 </head>
 	<div th:replace="/app.html::header"></div>
+    <th:block th:if="${flush != null}">
+       <div id="flush_success">
+           <p th:text="${flush}"/>
+       </div>
+   	</th:block>
     <h2>従業員　一覧</h2>
     <table id="employee_list">
     	<tbody>
@@ -17,7 +22,7 @@
 			<td th:if="*{delete_flag != 1}" ><a th:href="@{'/employees/show?id=' + *{id}}">詳細を表示</a></td>
         </tr>
     </table>
-	
+
     <p><a th:href="@{'/employees/new'}">新規従業員の登録</a></p>
 
 	<div th:replace="/app.html::footer"></div>
