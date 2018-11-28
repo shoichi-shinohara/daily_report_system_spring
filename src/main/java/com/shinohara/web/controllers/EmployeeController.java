@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,11 +17,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.shinohara.web.models.Employee;
 import com.shinohara.web.models.EmployeeRepository;
 
+import utils.EncryptUtil;
+
 @Controller
 public class EmployeeController {
 
 	@Autowired
 	EmployeeRepository repository;
+
+	@Autowired
+	private Environment environment;
 
 	@RequestMapping(value="/employees/index", method = RequestMethod.GET)
 	public String index(Model model) {
@@ -62,6 +68,12 @@ public class EmployeeController {
 		} else {
 			employee.setUpdated_at(new Timestamp(System.currentTimeMillis()));
 			employee.setDelete_flag(0);
+
+			employee.setPassword(
+                    EncryptUtil.getPasswordEncrypt(
+                    		employee.getPassword(), environment.getProperty("salt")
+                    		)
+                    );
 			repository.save(employee);
 
 			model.addAttribute("flush", "更新が完了しました。");
@@ -99,6 +111,13 @@ public class EmployeeController {
 			employee.setCreated_at(time_at);
 			employee.setUpdated_at(time_at);
 			employee.setDelete_flag(0);
+
+			employee.setPassword(
+                    EncryptUtil.getPasswordEncrypt(
+                    		employee.getPassword(), environment.getProperty("salt")
+                    		)
+                    );
+
 			repository.save(employee);
 
 			model.addAttribute("flush", "登録が完了しました。");
