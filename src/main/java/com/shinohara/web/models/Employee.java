@@ -39,7 +39,6 @@ public class Employee {
     private Integer id;
 
     @NotEmpty(message = "社員番号を入力してください。")
-    //@EmployeeValid
     @Column(name = "code", nullable = false, unique = true)
     private String code;
 
